@@ -25,17 +25,26 @@ const newsCardlist = async (cardlists) => {
     newscontainer.textContent = "";
     cardlists.forEach(cardlist => {
         console.log(cardlist);
-        // const thumbnail=cardlist.console
+        const { author, title, details, total_view, rating } = cardlist;
+        const authorImg = author.img;
+        const authorName = author.name;
+        const authorDate = author.published_date
+        const { number } = rating;
         const divCard = document.createElement('div')
         divCard.classList.add('cardpadding')
         divCard.innerHTML = `
         <div class="card lg:card-side bg-base-100 h-60 my-4 shadow-xl p-50 ">
         <figure><img src="${cardlist.thumbnail_url ? cardlist.thumbnail_url : `no information found`}" alt="Album" /></figure>
         <div class="card-body">
-            <h2 class="card-title">New album is released!</h2>
-            <p>Click the button to listen on Spotiwhy app.</p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-primary">Listen</button>
+            <h2 class="card-title">${title}</h2>
+            <p>${details.length > 120 ? details.slice(0, 250) + '...' : details}</p>
+            <div class="card-actions flex justify-between">
+               <div class="flex flex-row gap-4" >
+               <img class="h-8 w-8 rounded-full overflow-hidden" src="${authorImg}"></img>
+             <div><p>${authorName}</p>
+             <p>${authorDate}</p></div>
+               </div>
+                <button class="btn btn-primary">More Details</button>
             </div>
         </div>
        </div>
@@ -43,14 +52,6 @@ const newsCardlist = async (cardlists) => {
         newscontainer.appendChild(divCard);
     })
 }
-/*<div class="my-4">
-                   
-                    
-{ </div> }*/
-
-
-
-
 
 const displayNewslist = async (newslists) => {
     const newsCatagory = newslists.news_category
