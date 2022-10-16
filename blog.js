@@ -10,18 +10,27 @@ const loadNewslist = async () => {
     }
 }
 const loadNewsCard = async (id) => {
+    console.log(id);
     const cardUrl = `https://openapi.programming-hero.com/api/news/category/${id}`
     try {
         const resCard = await fetch(cardUrl)
         const dataCard = await resCard.json();
-        newsCardlist(dataCard.data);
+        console.log(dataCard.data.length);
+        (dataCard.data.length !== 0 ? newsCardlist(dataCard.data) : noResult());
     }
     catch (error) {
         console.log(error)
     }
 }
+const displaynone = document.getElementById('display-none');
+const newscontainer = document.getElementById('news-container')
+const noResult = async () => {
+    newscontainer.textContent = "";
+    displaynone.classList.remove('hidden')
+    return;
+}
 const newsCardlist = async (cardlists) => {
-    const newscontainer = document.getElementById('news-container')
+    displaynone.classList.add('hidden')
     newscontainer.textContent = "";
     cardlists.forEach(cardlist => {
         console.log(cardlist);
@@ -29,7 +38,7 @@ const newsCardlist = async (cardlists) => {
         const authorImg = author.img;
         const authorName = author.name;
         const authorDate = author.published_date
-        const { number } = rating;
+        // const { number } = rating;
         const divCard = document.createElement('div')
         divCard.classList.add('cardpadding')
         divCard.innerHTML = `
@@ -44,20 +53,23 @@ const newsCardlist = async (cardlists) => {
              <div><p>${authorName}</p>
              <p>${authorDate}</p></div>
                </div>
-                <button class="btn btn-primary">More Details</button>
+               <div>Viewer  ${total_view}M</div>
+              <div>
+              <label for="my-modal" class="btn btn-primary modal-button">More Details</label>
             </div>
         </div>
        </div>
         `
         newscontainer.appendChild(divCard);
     })
+    return;
 }
 
 const displayNewslist = async (newslists) => {
     const newsCatagory = newslists.news_category
     newsCatagory.forEach(news => {
         const { category_id, category_name } = news;
-        // console.log(category_id, category_name);
+        // console.log(category_id);
         const newslistcontainer = document.getElementById('newslist-container');
         const divlist = document.createElement('div');
         divlist.innerHTML = `
