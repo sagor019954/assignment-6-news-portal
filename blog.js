@@ -53,13 +53,14 @@ const noResult = async () => {
     displaynone.classList.remove('hidden')
     return;
 }
-
+const numberShow = document.getElementById('show-number');
 const newsCardlist = async (cardlists) => {
     const arryCardName = [];
     collapseContainer.classList.add('hidden')
     spinnerContainer.classList.add('hidden')
     displaynone.classList.add('hidden')
     newscontainer.textContent = "";
+
     cardlists.forEach(cardlist => {
         // console.log(cardlist);
         const { author, title, details, total_view, } = cardlist;
@@ -68,8 +69,8 @@ const newsCardlist = async (cardlists) => {
         const authorImg = author.img;
         const authorName = author.name;
         arryCardName.push(authorName)
-        console.log(arryCardName.length);
-        const numberShow = document.getElementById('show-number');
+        // console.log(arryCardName.length);
+        numberShow.innerText = '';
         numberShow.innerText = arryCardName.length;
         const authorDate = author.published_date
         // const { number } = rating;
