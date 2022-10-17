@@ -1,3 +1,6 @@
+const spinnerContainer = document.getElementById('spinner')
+
+// display all newalist 
 const loadNewslist = async () => {
     const newsListUrl = `https://openapi.programming-hero.com/api/news/categories`
     try {
@@ -9,8 +12,27 @@ const loadNewslist = async () => {
         console.log(error);
     }
 }
+const displayNewslist = async (newslists) => {
+    const newsCatagory = newslists.news_category
+    newsCatagory.forEach(news => {
+        const { category_id, category_name } = news;
+        // console.log(category_id);
+        const newslistcontainer = document.getElementById('newslist-container');
+        const divlist = document.createElement('div');
+        divlist.innerHTML = `
+        <p class="m-3" onclick="loadNewsCard('${category_id}')">${category_name}</p>
+        `
+        newslistcontainer.appendChild(divlist);
+
+    })
+
+}
+loadNewslist();
+/*------- news card list----------*/
+
 const loadNewsCard = async (id) => {
     // console.log(id);
+    spinnerContainer.classList.remove('hidden')
     const cardUrl = `https://openapi.programming-hero.com/api/news/category/${id}`
     try {
         const resCard = await fetch(cardUrl)
@@ -25,12 +47,17 @@ const loadNewsCard = async (id) => {
 const displaynone = document.getElementById('display-none');
 const newscontainer = document.getElementById('news-container')
 const noResult = async () => {
+    collapseContainer.classList.add('hidden')
+    spinnerContainer.classList.add('hidden')
     newscontainer.textContent = "";
     displaynone.classList.remove('hidden')
     return;
 }
 
 const newsCardlist = async (cardlists) => {
+
+    collapseContainer.classList.add('hidden')
+    spinnerContainer.classList.add('hidden')
     displaynone.classList.add('hidden')
     newscontainer.textContent = "";
     cardlists.forEach(cardlist => {
@@ -67,6 +94,9 @@ const newsCardlist = async (cardlists) => {
     })
     return;
 }
+/*
+------- modal added in here ------
+*/
 const newmodalCard = async (newid) => {
     // console.log(newid);
     const modalCardUrl = `https://openapi.programming-hero.com/api/news/${newid}`
@@ -79,36 +109,28 @@ const newmodalCard = async (newid) => {
     }
 
 }
+
 const displayModal = async (modalCardData) => {
+
     const CardTitle = document.getElementById('card-title')
     CardTitle.textContent = "";
     const modalCards = modalCardData.data[0]
     const { author, total_view } = modalCards
     const total = parseFloat(total_view)
-    console.log(typeof (total));
+
     const { name, img } = author
     const title = document.createElement('h2')
     title.innerHTML = `
    <div> <img class="w-40 h-40" src="${img}"></img>
    <p class="card-title">${typeof (name) === "string" ? name : 'NO Name'}</p>
-   <p >${typeof (total) == 'number' ? total : total} </p>
+   <p >${typeof (total) == 'number' ? total + 'M' : total} </p>
    </div>
 `
     CardTitle.appendChild(title)
 }
-const displayNewslist = async (newslists) => {
-    const newsCatagory = newslists.news_category
-    newsCatagory.forEach(news => {
-        const { category_id, category_name } = news;
-        // console.log(category_id);
-        const newslistcontainer = document.getElementById('newslist-container');
-        const divlist = document.createElement('div');
-        divlist.innerHTML = `
-        <p class="m-3" onclick="loadNewsCard('${category_id}')">${category_name}</p>
-        `
-        newslistcontainer.appendChild(divlist);
-    })
-
-}
-loadNewslist();
-loadNewsCard();
+const collapseContainer = document.getElementById('collapse-container')
+const collapsection = document.getElementById('collapse-btn').addEventListener('click', function () {
+    collapseContainer.classList.remove('hidden')
+    newscontainer.textContent = "";
+    displaynone.textContent = "";
+})

@@ -26,7 +26,7 @@
                 <div class="flex-none">
                     <ul class="menu menu-horizontal p-0 text-white">
                         <li><a>Home</a></li>
-                        <li><a>Article</a></li>
+                        <li id="collapse-btn"><a>Article</a></li>
                         <li> <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                                 <div class="w-full rounded-full">
                                     <img class="w-full" src="./image/Avatar.png" />
@@ -41,9 +41,13 @@
         </section>
     </header>
     <main>
+
         <section class="mx-auto w-5/6 mt-4">
             <div id="newslist-container" class="flex flex-row gap-6 ">
             </div>
+        </section>
+        <section>
+            <progress id="spinner" class="progress w-full hidden"></progress>
         </section>
         <section id="display-none" class="text-center mt-20 hidden">
             <h1>No Result Found</h1>
@@ -67,6 +71,47 @@
                         <div class="modal-action justify-center mb-4">
                             <label for="my-modal" class="btn">Close</label>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- *---- collapse section----* -->
+        <section id="collapse-container" class="hidden">
+            <div class="w-1/2 mx-auto  rounded-md">
+                <div class="collapse  bg-base-300 ">
+                    <input type="checkbox" />
+                    <div class="collapse-title text-sm font-medium text-center">
+                        Click me to show/hide content
+                    </div>
+                    <div class="collapse-content text-center">
+                        <p>hello</p>
+                    </div>
+                </div>
+                <div class="collapse  bg-base-300 ">
+                    <input type="checkbox" />
+                    <div class="collapse-title text-sm font-medium text-center ">
+                        Click me to show/hide content
+                    </div>
+                    <div class="collapse-content text-center ">
+                        <p>hello</p>
+                    </div>
+                </div>
+                <div class="collapse  bg-base-300 ">
+                    <input type="checkbox" />
+                    <div class="collapse-title text-sm font-medium text-center">
+                        Click me to show/hide content
+                    </div>
+                    <div class="collapse-content text-center">
+                        <p>hello</p>
+                    </div>
+                </div>
+                <div class="collapse  bg-base-300 ">
+                    <input type="checkbox" />
+                    <div class="collapse-title text-sm font-medium text-center">
+                        Click me to show/hide content
+                    </div>
+                    <div class="collapse-content text-center">
+                        <p>hello</p>
                     </div>
                 </div>
             </div>
