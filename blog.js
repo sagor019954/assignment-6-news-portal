@@ -55,7 +55,7 @@ const noResult = async () => {
 }
 
 const newsCardlist = async (cardlists) => {
-
+    const arryCardName = [];
     collapseContainer.classList.add('hidden')
     spinnerContainer.classList.add('hidden')
     displaynone.classList.add('hidden')
@@ -67,6 +67,10 @@ const newsCardlist = async (cardlists) => {
         // console.log(authorNewId);
         const authorImg = author.img;
         const authorName = author.name;
+        arryCardName.push(authorName)
+        console.log(arryCardName.length);
+        const numberShow = document.getElementById('show-number');
+        numberShow.innerText = arryCardName.length;
         const authorDate = author.published_date
         // const { number } = rating;
         const divCard = document.createElement('div')
