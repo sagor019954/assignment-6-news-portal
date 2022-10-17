@@ -77,23 +77,28 @@ const newsCardlist = async (cardlists) => {
         const divCard = document.createElement('div')
         divCard.classList.add('cardpadding')
         divCard.innerHTML = `
-        <div class="card lg:card-side bg-base-100 h-60 my-4 shadow-xl p-50 ">
-        <figure><img src="${cardlist.thumbnail_url ? cardlist.thumbnail_url : `no information found`}" alt="Album" /></figure>
-        <div class="card-body">
+        <div class="card lg:card-side flex lg:flex-row sm:flex-col bg-base-100 h-full my-4 shadow-xl lg:p-50 ">
+          <div>
+               <figure><img src="${cardlist.thumbnail_url ? cardlist.thumbnail_url : `no information found`}" alt="Album" /></figure>
+          </div>
+          <div>
+          <div class="card-body">
             <h2 class="card-title">${title}</h2>
             <p>${details.length > 120 ? details.slice(0, 250) + '...' : details}</p>
+          </div>
             <div class="card-actions flex justify-between">
                <div class="flex flex-row gap-4" >
                <img class="h-8 w-8 rounded-full overflow-hidden" src="${authorImg}"></img>
-             <div><p>${authorName}</p>
+             <div class="sm:p-4"><p>${authorName}</p>
              <p>${authorDate}</p></div>
                </div>
                <div>Viewer  ${total_view}M</div>
               <div>
               <label for="my-modal"  onclick="newmodalCard('${authorNewId}')"  class="btn btn-primary  modal-button"> Author Details</label>
             </div>
+          </div>
         </div>
-       </div>
+       
         `
         newscontainer.appendChild(divCard);
     })
