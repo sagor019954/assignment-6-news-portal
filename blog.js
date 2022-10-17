@@ -15,7 +15,7 @@ const loadNewsCard = async (id) => {
     try {
         const resCard = await fetch(cardUrl)
         const dataCard = await resCard.json();
-        console.log(dataCard.data.length);
+        // console.log(dataCard.data.length);
         (dataCard.data.length !== 0 ? newsCardlist(dataCard.data) : noResult());
     }
     catch (error) {
@@ -29,19 +29,15 @@ const noResult = async () => {
     displaynone.classList.remove('hidden')
     return;
 }
-const modalCard = async (_id) => {
-    const modalCardUrl = `https://openapi.programming-hero.com/api/news/${_id}`
-    const modalCardres = await fetch(modalCardUrl);
-    const modalCardData = await modalCardres.json();
-    console.log(modalCardData);
-}
+
 const newsCardlist = async (cardlists) => {
     displaynone.classList.add('hidden')
     newscontainer.textContent = "";
     cardlists.forEach(cardlist => {
         // console.log(cardlist);
-        const { author, title, details, total_view, _id } = cardlist;
-        // console.log(_id);
+        const { author, title, details, total_view, } = cardlist;
+        const authorNewId = cardlist._id
+        // console.log(authorNewId);
         const authorImg = author.img;
         const authorName = author.name;
         const authorDate = author.published_date
@@ -62,7 +58,7 @@ const newsCardlist = async (cardlists) => {
                </div>
                <div>Viewer  ${total_view}M</div>
               <div>
-              <label for="my-modal" class="btn btn-primary onclick="modalCard(${_id})" modal-button">Author Details</label>
+              <label for="my-modal"  onclick="newmodalCard('${authorNewId}')"  class="btn btn-primary  modal-button"> Author Details</label>
             </div>
         </div>
        </div>
@@ -71,7 +67,35 @@ const newsCardlist = async (cardlists) => {
     })
     return;
 }
+const newmodalCard = async (newid) => {
+    // console.log(newid);
+    const modalCardUrl = `https://openapi.programming-hero.com/api/news/${newid}`
+    try {
+        const modalCardres = await fetch(modalCardUrl)
+        const modalCardData = await modalCardres.json();
+        displayModal(modalCardData);
+    } catch (error) {
+        console.log(error);
+    }
 
+}
+const displayModal = async (modalCardData) => {
+    const CardTitle = document.getElementById('card-title')
+    CardTitle.textContent = "";
+    const modalCards = modalCardData.data[0]
+    const { author, total_view } = modalCards
+    const total = parseFloat(total_view)
+    console.log(typeof (total));
+    const { name, img } = author
+    const title = document.createElement('h2')
+    title.innerHTML = `
+   <div> <img class="w-40 h-40" src="${img}"></img>
+   <p class="card-title">${typeof (name) === "string" ? name : 'NO Name'}</p>
+   <p >${typeof (total) == 'number' ? total : total} </p>
+   </div>
+`
+    CardTitle.appendChild(title)
+}
 const displayNewslist = async (newslists) => {
     const newsCatagory = newslists.news_category
     newsCatagory.forEach(news => {
