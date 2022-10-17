@@ -10,7 +10,7 @@ const loadNewslist = async () => {
     }
 }
 const loadNewsCard = async (id) => {
-    console.log(id);
+    // console.log(id);
     const cardUrl = `https://openapi.programming-hero.com/api/news/category/${id}`
     try {
         const resCard = await fetch(cardUrl)
@@ -29,12 +29,19 @@ const noResult = async () => {
     displaynone.classList.remove('hidden')
     return;
 }
+const modalCard = async (_id) => {
+    const modalCardUrl = `https://openapi.programming-hero.com/api/news/${_id}`
+    const modalCardres = await fetch(modalCardUrl);
+    const modalCardData = await modalCardres.json();
+    console.log(modalCardData);
+}
 const newsCardlist = async (cardlists) => {
     displaynone.classList.add('hidden')
     newscontainer.textContent = "";
     cardlists.forEach(cardlist => {
-        console.log(cardlist);
-        const { author, title, details, total_view, rating } = cardlist;
+        // console.log(cardlist);
+        const { author, title, details, total_view, _id } = cardlist;
+        // console.log(_id);
         const authorImg = author.img;
         const authorName = author.name;
         const authorDate = author.published_date
@@ -55,7 +62,7 @@ const newsCardlist = async (cardlists) => {
                </div>
                <div>Viewer  ${total_view}M</div>
               <div>
-              <label for="my-modal" class="btn btn-primary modal-button">More Details</label>
+              <label for="my-modal" class="btn btn-primary onclick="modalCard(${_id})" modal-button">Author Details</label>
             </div>
         </div>
        </div>
@@ -80,3 +87,4 @@ const displayNewslist = async (newslists) => {
 
 }
 loadNewslist();
+loadNewsCard();
